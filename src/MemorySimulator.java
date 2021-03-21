@@ -149,12 +149,10 @@ public class MemorySimulator {
             if (partition.isAllocated()) {
                 if (roundNumber(rn.nextDouble()) < partition.getFree()) {
                     partition.setAllocated(false);
-                    //System.out.println(partition.getPageIndexes());
                     for (int index : partition.getPageIndexes()) {
                         pagesList[index] = 0;
                     }
                     partition.getPageIndexes().clear();
-                    //System.out.println(partition.getPageIndexes());
                     System.out.println("@t = " + i + " | FREEING partition " + (i + 1) + " | pages =  " + partition.getPages() + " | prob = " + partition.getFree());
                 }
             }
@@ -162,7 +160,7 @@ public class MemorySimulator {
 
             // MeToo simulation loop
             if (!partition.isAllocated()) {
-                if (roundNumber(rn.nextDouble()) < getMeToo(i, jIndex, partitions)) {
+                if (roundNumber(rn.nextDouble()) < getMeToo(i, jIndex, partitionTest)) {
                     boolean isIthFitAllocated = ithFit(partition, pagesList);
                     if (isIthFitAllocated) partition.setAllocated(true);
                     System.out.println("@t = " + i + " | partition " + (i + 1) + " | pages =  " + partition.getPages() + " | meToo = " + partition.getMetoo()[i]);
